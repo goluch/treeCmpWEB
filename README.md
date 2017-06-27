@@ -1,2 +1,2 @@
-# treeCmpWEB
-TreeCmpWEB: java servlet for comparison of trees in polynomial time
+# treeCmp
+Phylogenetic Trees Comparer - software for calculating distances between phylogenetic trees

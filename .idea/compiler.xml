@@ -7,10 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="TreeCmpGUI" />
+        <module name="TreeCmpWEB" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="TreeCmpGUI" target="1.7" />
+      <module name="TreeCmpWEB" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

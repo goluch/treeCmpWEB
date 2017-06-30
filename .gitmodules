@@ -6,3 +6,11 @@
 	path = src/main/java/pal
 	url = https://github.com/goluch/pal.git
 	branch = pal-src-tamuri
+[submodule "src/main/webapp/WEB-INF/lib/data"]
+	path = src/main/webapp/WEB-INF/lib/data
+	url = https://github.com/goluch/treeCmp.git
+	branch = data
+[submodule "src/main/webapp/WEB-INF/lib/config"]
+	path = src/main/webapp/WEB-INF/lib/config
+	url = https://github.com/goluch/treeCmp.git
+	branch = config

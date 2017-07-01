@@ -1,5 +1,6 @@
 package pl.gda.pg.eti.controller;
 
+import java.io.FileNotFoundException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 
@@ -43,7 +44,13 @@ public class TreeCmpExecutor {
 		}
 		
 
-		ConfigSettings.initConfig(conf, dataDir);
+        try {
+            ConfigSettings.initConfig(conf, dataDir);
+        } catch (FileNotFoundException ex) {
+            //can not find the configuration file
+            System.out.println(ex.getMessage());
+            return;
+        }
 		
 		Command cmd = null;
 		try {

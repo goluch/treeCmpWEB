@@ -35,14 +35,6 @@
 		</dependency>
 		
 		<dependency>
-		    <groupId>treecmp</groupId>
-		    <artifactId>treecmp</artifactId>
-		    <version>1.0</version>
-		    <scope>system</scope>		
-			<systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/TreeCmp.jar</systemPath>
-		</dependency>
-	
-		<dependency>
 		    <groupId>org.springframework</groupId>
 		    <artifactId>spring-context</artifactId>
 		    </dependency>

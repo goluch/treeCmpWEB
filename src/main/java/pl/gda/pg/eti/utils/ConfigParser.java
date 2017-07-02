@@ -60,7 +60,7 @@ public class ConfigParser {
 		
 		InputStream ipStream = null;
 		try {
-			String path = String.format("%s\\config.xml", metricConfigFilePath);
+			String path = String.format("%s/config.xml", metricConfigFilePath);
 			ipStream = new FileInputStream(path);
 		} catch (FileNotFoundException e1) {
 			// TODO Auto-generated catch block

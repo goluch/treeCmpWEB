@@ -23,7 +23,7 @@ public class TreeCmpExecutor {
 	
 	public TreeCmpExecutor(String configPath, String dataPath, String[] args) {
 		this.args = args;
-		conf = configPath + "\\config.xml";
+		conf = configPath + "/config.xml";
 		dataDir = dataPath;
 	}
 

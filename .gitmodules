@@ -6,10 +6,6 @@
 	path = src/main/webapp/WEB-INF/lib/data
 	url = https://github.com/goluch/treeCmp.git
 	branch = data
-[submodule "src/main/webapp/WEB-INF/lib/config"]
-	path = src/main/webapp/WEB-INF/lib/config
-	url = https://github.com/goluch/treeCmp.git
-	branch = config
 [submodule "src/main/java/treecmp"]
 	path = src/main/java/treecmp
 	url = https://github.com/goluch/treeCmp.git

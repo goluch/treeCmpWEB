@@ -59,7 +59,7 @@ public class NewickController {
 	private String reportStr;
 	private Mode comparisionMode;
 
-	@RequestMapping(value = "/newick", method = RequestMethod.GET)
+	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView getNewick(Model model) {
 
 		if (confParser.getMetricConfigFilePath().equals("")) {

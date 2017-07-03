@@ -25,14 +25,6 @@
 	</properties>
 
 	<dependencies>
-	
-		<dependency>
-		    <groupId>org.forester</groupId>
-		    <artifactId>forester</artifactId>
-		    <version>1.0</version>
-		    <scope>system</scope>
-		    <systemPath>${project.basedir}/src/main/webapp/WEB-INF/lib/archaeopteryx_applets_1028.jar</systemPath>
-		</dependency>
 		
 		<dependency>
 		    <groupId>org.springframework</groupId>
@@ -129,6 +121,15 @@
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.10</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/org.biojava.thirdparty/forester -->
+		<dependency>
+			<groupId>org.biojava.thirdparty</groupId>
+			<artifactId>forester</artifactId>
+			<version>1.038</version>
+		</dependency>
+
+
 	</dependencies>
 
 	<build>

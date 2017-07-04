@@ -10,6 +10,7 @@ import java.util.Scanner;
 import javax.servlet.ServletContext;
 import javax.validation.Valid;
 
+import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -59,7 +60,12 @@ public class NewickController {
 	private String reportStr;
 	private Mode comparisionMode;
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+/*	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String hello() {
+		return "index";
+	}*/
+
+	@RequestMapping(value = "/WEB", method = RequestMethod.GET)
 	public ModelAndView getNewick(Model model) {
 
 		if (confParser.getMetricConfigFilePath().equals("")) {
@@ -81,7 +87,7 @@ public class NewickController {
 	protected void initBinder(WebDataBinder binder) { 
 	}
 
-	@RequestMapping(value = "/trees/", method = RequestMethod.GET) 
+	@RequestMapping(value = "/trees/", method = RequestMethod.GET)
 	public ModelAndView visualizeTrees(@RequestParam Map<String, String> treesIds, Model model) {
 		try	{
 			int firstTreeId = Integer.parseInt(treesIds.get("firstTreeId"));

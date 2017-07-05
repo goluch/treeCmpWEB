@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/TreeCmpGUI.iml" filepath="$PROJECT_DIR$/TreeCmpGUI.iml" />
+      <module fileurl="file://$PROJECT_DIR$/TreeCmp.iml" filepath="$PROJECT_DIR$/TreeCmp.iml" />
     </modules>
   </component>
 </project>

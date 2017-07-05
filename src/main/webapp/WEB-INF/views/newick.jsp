@@ -62,7 +62,7 @@
 	<!-- MAIN CONTAINER -->
 	<div class="container-fluid">
 		
-		<form:form method="POST" commandName="newickStringNew" action="/checkNewick">
+		<form:form method="POST" commandName="newickStringNew" action="/TreeCmp/checkNewick">
 			<div class="row">
 				<div class="col-xs-12 col-xs-offset-0 col-lg-offset-1 main">
  					<div class="form-group">
@@ -102,10 +102,9 @@
 	                            </table>
 								<form:textarea path="newickStringFirst" class="form-control"
 									rows="14" id="newickInputFirst"
-									placeholder="Paste or drag and drop your trees in newick format separated by ;" style="resize: none;"/>
-								<div></div>
+									placeholder="Paste or drag and drop your trees in newick format separated by ;" style="resize: none;"></form:textarea>
 								<div>
-									<form:errors path="newickStringFirst" cssClass="error"/>
+									<form:errors path="newickStringFirst" cssClass="error" />
 								</div>
 								<div class="exmpBtn smallMargin" id="addExmpTreeToFirstWindow"><a href="#">Example Trees</a></div>
 								
@@ -129,7 +128,7 @@
 		                            </table>
 									<form:textarea path="newickStringSecond" class="form-control"
 										rows="14" id="newickInputSecond"
-										placeholder="Paste or drag and drop your trees in newick format separated by ;" style="resize: none;"/>
+										placeholder="Paste or drag and drop your trees in newick format separated by ;" style="resize: none;"></form:textarea>									
 									<div>
 										<form:errors path="newickStringSecond" cssClass="error" />
 									</div>

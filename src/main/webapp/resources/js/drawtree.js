@@ -330,7 +330,7 @@ function getTrees(firstTreeId, secondTreeId) {
 	        'Accept': 'application/json',
 	        'Content-Type': 'application/json' 
 	    },
-		url: "/trees",
+		url: "/TreeCmp/trees",
 		type: 'POST',
 		dataType: 'json',
 		data: "{\"firstTreeId\" : \""+ firstTreeId +"\", \"secondTreeId\" : \""+ secondTreeId +"\"}",

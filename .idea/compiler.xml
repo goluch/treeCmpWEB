@@ -6,11 +6,13 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="TreeCmp" />
         <module name="TreeCmpGUI" />
+        <module name="TreeCmpWEB" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="1.8">
-      <module name="TreeCmpGUI" target="1.8" />
+    <bytecodeTargetLevel target="1.7">
+      <module name="TreeCmp" target="1.7" />
     </bytecodeTargetLevel>
   </component>
 </project>

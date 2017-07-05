@@ -1,7 +1,3 @@
-[submodule "src/main/java/pal"]
-	path = src/main/java/pal
-	url = https://github.com/goluch/pal.git
-	branch = pal-src-tamuri
 [submodule "src/main/java/treecmp"]
 	path = src/main/java/treecmp
 	url = https://github.com/goluch/treeCmp.git

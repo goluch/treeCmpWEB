@@ -29,87 +29,186 @@
 <title>Report</title>
 </head>
 <body>
-   <div id="myModal" class="modal fade">
-        <div class="modal-dialog"> <div class="modal-content">
-            <div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h5 class="modal-title">Link to share tree visualisation</h5></div>
+<div id="myModal" class="modal fade">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h5 class="modal-title">Link to share tree visualisation</h5>
+            </div>
             <div class="modal-body">
-                <a href="" id="exportURLInSingle" ></a>
+                <a href="" id="exportURLInSingle"></a>
             </div>
         </div>
-        </div>
-        </div>
     </div>
-    <div id="wrapper">
-        <!-- Sidebar -->
-        <div id="sidebar-wrapper">
-            <div id="sidebar-wrapper-wrapper">
-                <ul class="sidebar-nav">
-                	<input hidden type="text" class="treename" for="newickIn1File" id="newickIn1Label" rows="1" placeholder="Untitled"></input>
-                	<input hidden type="text" class="treename" for="newickIn2File" id="newickIn2Label" rows="1" placeholder="Untitled"></input>
-                    <li>
-                        <a href="#" id="settings"><span class="glyphicon glyphicon-cog" aria-hidden="true"></span> Settings</a>
-                        <div id="settingsPanel">
-                            <b class="noExtraMargin">Auto-Collapse Depth:</b>
-                            <div class="extraMargin" id="autoCollapseButtons">
-                                <button type="button" id="collapseDec" class="btn btn-primary collapseElem collapseButton">-</button>
-                                <div id="collapseAmount" class="collapseElem">3</div>
-                                <button type="button" id="collapseInc" class="btn btn-primary collapseElem collapseButton">+</button>
+</div>
+
+<div id="wrapper">
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+        <div id="menu-toggle">
+            <i class="fa fa-2x fa-arrow-circle-left" id="collapse-sidebar-span" style="color: #e7e7e7; padding-top: 2px; padding-left: 2px;"></i>
+        </div>
+        <div id="sidebar-wrapper-wrapper">
+            <ul class="sidebar-nav">
+                <li>
+                    <a href="#" id="settings" style="line-height: 25px; text-decoration: none;"><i style="vertical-align: middle; text-align: center; margin: 0;"
+                                                                                                   class="fa fa-pencil-square-o"
+                                                                                                   aria-hidden="true"></i>
+                        Settings&nbsp;
+                    </a>
+                    <div id="settingsPanel">
+                        <div class="row" style="line-height: 30px;">
+                            <div class="col-sm-7">
+                                <label class="settingsLabel" style="vertical-align: middle;">Auto-Collapse Depth:</label>
                             </div>
-                            <b>Internal Labels:</b>
-                            <form class="internalLabels">
-                                <input type="radio" name="internalLabels" value="none" checked>None
-                                <br>
-                                <input type="radio" class="extraMargin" name="internalLabels" value="name">Branch Labels/Support
-                                <br>
-                                <input type="radio" class="extraMargin" name="internalLabels" value="length">Length
-                                <br>
-                                <input type="radio" class="extraMargin" name="internalLabels" value="similarity">Similarity
-                            </form>
-                            <b>Adjust Tree Style:</b>
-                            <p>Line Thickness</p>
-                            <input type="range" class="sizeAdjust extraMargin" id="lineThickness" min="1" max="10" value="3"></input>
-                            <p>Node Size</p>
-                            <input type="range" class="sizeAdjust extraMargin" id="nodeSize" min="0" max="10" value="3"></input>
-                            <p>Font Size</p>
-                            <input type="range" class="sizeAdjust extraMargin" id="fontSize" min="5" max="40" value="14"></input>
-                            <br>
-                            <input type="checkbox" id="useLengths" checked>Use Lengths</input>
-                            <br>
-                            <input type="checkbox" id="moveOnMouseOver" checked>
-                            <div class="smallText">
-                                <p>
-                                    <br>Move To Best Corresponding Node on Highlight Click</p>
+                            <div class="col-sm-5 pull-right">
+                                <div id="autoCollapseButtons">
+                                    <button type="button" id="collapseDec"
+                                            class="btn btn-default btn-xs collapseButton">
+                                        <i style="margin-left: 2px; vertical-align: middle;" class="fa fa-minus"
+                                           aria-hidden="true"></i>
+                                    </button>
+                                    <span id="collapseAmount" class="collapseElem">3</span>
+                                    <button type="button" id="collapseInc" class="btn btn-default btn-xs collapseButton">
+                                        <i class="fa fa-plus" aria-hidden="true"></i>
+                                    </button>
+                                </div>
                             </div>
-                            </input>
-                            <input type="checkbox" id="selectMultipleSearch">Select multiple search results</input>
-                            <br>
                         </div>
-                    </li>
-                    <li>
-                        <a href="#" id="export"><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</a>
-                    </li>
-                    <li class="compareIn">
-                        <a href="#" id="svgExport"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Export both trees</a>
-                    </li>
-                    <li>
-                        <a href="manual.html"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Help</a>
-                    </li>
-                </ul>
-                <div class="footer" id="footer_div" style="text-align: center !important; background-color: #ddd; ">
-                    <a href="http://lab.dessimoz.org"><span class="glyphicon glyphicon-copyright-mark" aria-hidden="true"></span> Dessimoz Lab</a>
-                </div>
+                        <label class="settingsLabel">Internal Labels:</label>
+                        <form class="internalLabels" id="labelForm" style="padding-bottom: 10px">
+                            <div class="radio">
+                                <label class="settingsCheckboxLabel">
+                                    <input type="radio" name="internalLabels" value="none" id="internalLabelsNone"
+                                           checked>None
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label class="settingsCheckboxLabel">
+                                    <input type="radio" name="internalLabels" value="name">Branch
+                                    Labels/Support
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label class="settingsCheckboxLabel">
+                                    <input type="radio" name="internalLabels" value="length">Length
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label class="settingsCheckboxLabel opt">
+                                    <input type="radio" name="internalLabels" value="similarity"
+                                           id="internalLabelsSimilarity">Similarity
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label class="settingsCheckboxLabel opt">
+                                    <input type="radio" name="internalLabels" value="species"
+                                           id="internalLabelsSpecies">Species
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label class="settingsCheckboxLabel opt">
+                                    <input type="radio" name="internalLabels" value="duplication"
+                                           id="internalLabelsDuplication">Duplication/speciation
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label class="settingsCheckboxLabel opt">
+                                    <input type="radio" name="internalLabels" value="ECNumber"
+                                           id="internalLabelsECNumber">EC Number
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label class="settingsCheckboxLabel opt">
+                                    <input type="radio" name="internalLabels" value="taxonomyID"
+                                           id="internalLabelsTaxonomyID">NCBI Taxonomy ID
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label class="settingsCheckboxLabel opt">
+                                    <input type="radio" name="internalLabels" value="likelihood"
+                                           id="internalLabelsLikelihood">Parent branch log value
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label class="settingsCheckboxLabel opt">
+                                    <input type="radio" name="internalLabels" value="orthologous"
+                                           id="internalLabelsOrthologous">Display orthology
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label class="settingsCheckboxLabel opt">
+                                    <input type="radio" name="internalLabels" value="superorthologous"
+                                           id="internalLabelsSuperorthologous">Display super orthology
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label class="settingsCheckboxLabel opt">
+                                    <input type="radio" name="internalLabels" value="subtree"
+                                           id="internalLabelsSubtree">Subtree
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label class="settingsCheckboxLabel opt">
+                                    <input type="radio" name="internalLabels" value="collapseThis"
+                                           id="internalLabelsCollapseThis">Collapsed nodes
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label class="settingsCheckboxLabel opt">
+                                    <input type="radio" name="internalLabels" value="color" id="internalLabelsColor">NHX
+                                    colorscheme
+                                </label>
+                            </div>
+                        </form>
+                        <label class="settingsLabel">Adjust Tree Style:</label>
+                        <label class="settingsCheckboxLabel" style="padding-left: 10px; padding-top: 10px;">Line
+                            Thickness</label>
+                        <input type="range" class="sizeAdjust" id="lineThickness" min="1" max="10" value="3">
+                        <label class="settingsCheckboxLabel" style="padding-left: 10px; padding-top: 10px;">Node
+                            Size</label>
+                        <input type="range" class="sizeAdjust" id="nodeSize" min="0" max="10" value="3">
+                        <label class="settingsCheckboxLabel" style="padding-left: 10px; padding-top: 10px;">Font
+                            Size</label>
+                        <input type="range" class="sizeAdjust" id="fontSize" min="5" max="40" value="14">
+                        <div class="checkbox">
+                            <label class="settingsCheckboxLabel"><input type="checkbox" id="useLengths" checked>Use
+                                Lengths</label>
+                        </div>
+                        <div class="checkbox">
+                            <label class="settingsCheckboxLabel"><input type="checkbox" id="alignTipLabels">Align tip labels </label>
+                        </div>
+                        <div class="checkbox">
+                            <label class="settingsCheckboxLabel"><input type="checkbox" id="mirrorRightTree">Mirror right tree </label>
+                        </div>
+                        <div class="checkbox">
+                            <label class="settingsCheckboxLabel"><input type="checkbox" id="moveOnMouseOver" checked>Move
+                                To Best Corresponding Node on Highlight Click</label>
+                        </div>
+                        <div class="checkbox">
+                            <label class="settingsCheckboxLabel"><input type="checkbox" id="selectMultipleSearch">Select
+                                multiple search results</label>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+            <div class="footer" id="footer_div">
             </div>
         </div>
-        <!-- /#sidebar-wrapper -->
-        <!-- Page Content -->
-        <div id="page-content-wrapper">
-            <div id="placeholder">
-            </div>
-        </div>
-        <!-- /#page-content-wrapper -->
     </div>
-    <!-- /#wrapper -->
-</body>
+    <!-- /#sidebar-wrapper -->
+    <!-- Page Content -->
+    <div class="modal-container" id="spinner-container" style=""><span
+            style="position: relative; margin: 20px 10px 0 0; float: right;">Calculating...</span></div>
+    <div id="page-content-wrapper">
+        <div id="placeholder">
+        </div>
+    </div>
+    <!-- /#page-content-wrapper -->
+    <div id="colorScale"></div>
+</div>
+<!-- /#wrapper -->
 
 <script type="text/javascript">
 

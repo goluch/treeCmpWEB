@@ -254,9 +254,6 @@ function drawTrees(newickIn1, newickIn2, nameTree1, nameTree2) {
     treecomp.changeCanvasSettings({
         enableFixedButtons: true
     });
-    if (settingsShown) {
-        showHideSettingsPanel("hide");
-    }
 
     /*------
      /
@@ -299,6 +296,74 @@ function drawTrees(newickIn1, newickIn2, nameTree1, nameTree2) {
             $("#renderErrorMessage").append($('<div class="alert alert-danger" role="alert">Empty</div>')).hide().slideDown(300);
         }
     }
+    /*------
+     /
+     /    SHARE BUTTON
+     /
+     ------*/
+    $("#export").click(function (e) {
+        var mode = $("#mode-buttons .active").attr('id');
+        if (mode === "compare-btn") {
+            try {
+                var exportURLGist = treecomp.exportTree(true);
+                $("#exportURLInSingle").attr('href', exportURLGist);
+                $("#exportURLInSingle").html(exportURLGist);
+                $('#myModal').modal('show');
+            } catch (e) {
+                $("#renderErrorMessage").append($('<div class="alert alert-danger" role="alert">Nothing to share</div>')).hide().slideDown(300);
+            }
+        } else if (mode === "view-btn") {
+            try {
+                var exportURLGist = treecomp.exportTree(false);
+                $("#exportURLInSingle").attr('href', exportURLGist);
+                $("#exportURLInSingle").html(exportURLGist);
+                $('#myModal').modal('show');
+            } catch (e) {
+                $("#renderErrorMessage").append($('<div class="alert alert-danger" role="alert">Nothing to share</div>')).hide().slideDown(300);
+            }
+
+        }
+    });
+
+    /*------
+     /
+     /    SVG export button
+     /
+     ------*/
+    $("#svgExport").click(function (e) {
+
+        // Copy left tree
+        var svg1 = document.getElementById('vis-container1').getElementsByTagName('svg')[0].cloneNode(true);
+        var svg2 = document.getElementById('vis-container2').getElementsByTagName('svg')[0].cloneNode(true);
+        var colorscale = document.getElementById('colorScale').getElementsByTagName('svg')[0].cloneNode(true);
+
+        // Double the width on svg1
+        var l_w = parseInt(svg1.getAttribute('width')),
+            r_w = parseInt(svg2.getAttribute('width'));
+        svg1.setAttribute('width', (l_w + r_w));
+
+        // Add right tree into left tree's svg
+        var g = document.createElement('g');
+        var lastElementIndex = svg2.childNodes.length - 3;
+        var scaleTextIndex = svg2.childNodes.length - 2;
+
+        if (lastElementIndex > -1) {
+            g.setAttribute('transform', 'translate(' + l_w + ',0)');
+            main = svg2.childNodes[lastElementIndex];
+            scale = svg2.childNodes[scaleTextIndex];
+            scaleText = svg2.lastElementChild;
+
+            g.appendChild(main);
+            g.appendChild(scale);
+            g.appendChild(scaleText);
+            g.appendChild(colorscale);
+
+            svg1.appendChild(g);
+        }
+        svgExport.setAttribute('hreflang', 'image/svg+xml');
+        svgExport.setAttribute('href', 'data:image/svg+xml;base64,\n' + btoa(svg1.outerHTML));
+        svgExport.setAttribute("download", "Phylo.io-cmp.svg");
+    });
 
     /*------
      /
@@ -346,6 +411,75 @@ function drawTrees(newickIn1, newickIn2, nameTree1, nameTree2) {
             console.log("You should not be able to see this!!!!");
         }
     }
+
+    $(".sizeAdjust").change(function () {
+        treecomp.changeTreeSettings({
+            lineThickness: $("#lineThickness").val(),
+            nodeSize: $("#nodeSize").val(),
+            fontSize: $("#fontSize").val()
+
+        });
+    });
+
+    $("#useLengths").on("click", function () {
+        treecomp.changeTreeSettings({
+            useLengths: $("#useLengths").is(":checked")
+        });
+    });
+
+    $("#alignTipLabels").on("click", function () {
+        treecomp.changeTreeSettings({
+            alignTipLabels: $("#alignTipLabels").is(":checked")
+        });
+    });
+
+    $("#mirrorRightTree").on("click", function () {
+        treecomp.changeTreeSettings({
+            mirrorRightTree: $("#mirrorRightTree").is(":checked")
+        });
+    });
+
+    $("input[name=comparisonMetric]:radio").on("change", function () {
+        treecomp.changeTreeSettings({
+            comparisonMetric: $("input[name=comparisonMetric]:checked").val()
+        })
+    });
+
+    $("#moveOnMouseOver").on("click", function () {
+        treecomp.changeTreeSettings({
+            moveOnClick: $("#moveOnMouseOver").is(":checked")
+        })
+    });
+
+    $("#selectMultipleSearch").on("click", function () {
+        treecomp.changeTreeSettings({
+            selectMultipleSearch: $("#selectMultipleSearch").is(":checked")
+        })
+    });
+
+
+    $("input[name=internalLabels]:radio").on("change", function () {
+        treecomp.changeTreeSettings({
+            internalLabels: $("input[name=internalLabels]:checked").val()
+        });
+    });
+
+
+    //TODO: code to sync version number with tag in git-repo
+    /*var gitHubPath = 'phylo-io';  // example repo
+     var url = 'https://gitolite@lab.dessimoz.org:2222/' + gitHubPath + '/tags';
+
+     $.get(url).done(function (data) {
+     var versions = data.sort(function (v1, v2) {
+     return semver.compare(v2.name, v1.name)
+     });
+     $('#git-tag').html(versions[0].name);
+     console.log($('#git-tag').html(versions[0].name));
+     });*/
+    $('#git-tag').html("1.0.0");
+
+    $("#last-modif").html(document.lastModified);
+
     
 }
 

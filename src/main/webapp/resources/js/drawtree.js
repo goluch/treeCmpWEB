@@ -234,9 +234,6 @@ function drawTrees(newickIn1, newickIn2, nameTree1, nameTree2) {
             enableFixedButtons: false
         });
 
-        if (settingsShown) {
-            showHideSettingsPanel("hide");
-        }
     });
 
     /*
@@ -378,16 +375,8 @@ function drawTrees(newickIn1, newickIn2, nameTree1, nameTree2) {
     }
 
 
-    var settingsShown = false;
-
-    $("#settings").click(function (e) {
-        if (settingsShown) {
-            showHideSettingsPanel("hide");
-        }
-        else {
-            showHideSettingsPanel("show");
-        }
-    });
+    var settingsShown = true;
+    showHideSettingsPanel("show");
 
     function showHideSettingsPanel(mode) {
         if (mode == "show") {

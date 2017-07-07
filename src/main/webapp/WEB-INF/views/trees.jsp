@@ -17,12 +17,12 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/trees.css"/>" type="text/css" />
 
     <%--<script src="<c:url value="/resources/js/bootstrap-treecmp.js"/>"></script>--%>
-    <script src="<c:url value="/resources/js/drawtree.js"/>"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <%--<script src="http://code.jquery.com/jquery-2.1.4.js"></script>--%>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="http://d3js.org/d3.v3.min.js"></script>
 
+    <script src="<c:url value="/resources/js/drawtree.js"/>"></script>
     <script src="<c:url value="/resources/js/treecompare.js"/>"></script>
     <script src="<c:url value="/resources/js/underscore.min.js"/>"></script>
     <script src="<c:url value="/resources/js/spin.min.js"/>"></script>
@@ -31,12 +31,81 @@
     <script src="<c:url value="/resources/js/FileSaver.min.js"/>"></script>
     <script src="https://use.fontawesome.com/28dcb2432d.js"></script>
 
-    <script type="text/javascript">
-        $(document).ready(getTrees(${firstTreeId}, ${secondTreeId}, ${firstTreeId}, ${secondTreeId}));
-    </script>
+    <style>
+        .extraMargin + span:after {
+            content: "\000A";
+            white-space: pre;
+        }
+
+        .modal-container {
+            z-index: 3;
+            right: 50px;
+            top: 75px;
+            position: absolute;
+            padding: 5px 20px 15px 20px;
+            width: 180px;
+            height: 60px;
+            border-radius: 8px;
+            display: none;
+
+        }
+    </style>
+
     <title>Report</title>
 </head>
 <body>
+
+    <div id="myModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h5 class="modal-title">Link to share tree visualisation</h5>
+                </div>
+                <div class="modal-body">
+                    <a href="" id="exportURLInSingle"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+
+                <div class="row" style="width: 300px">
+                    <a class="navbar-brand" href="/www/index.html" style="padding-left: 20px;margin-right: 5px; padding-top: 2px">
+                        <!-- always show the brand name -->
+                        <span class="navbar-brand"
+                              style="font-size:x-large; font-weight: bold; margin-top: -3px">Phylo.io</span>
+                    </a>
+                </div>
+            </div>
+
+            <!-- menu navigation bar -->
+            <div id="navbar" class="navbar-collapse collapse list-inline">
+                <ul class="nav navbar-nav navbar-right list-inline" style="margin-right: 60px">
+                    <li class="dropdown" id="action">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Action <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#" id="export"><span class="glyphicon glyphicon-share" aria-hidden="true"></span> Share</a></li>
+                            <li><a href="#" id="svgExport"><span class="glyphicon glyphicon-save" aria-hidden="true"></span> Export both trees</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="http://phylo.io/manual.html" class="homelinks">Help</a></li>
+                    <li><a href="about.html" class="homelinks">About</a></li>
+                </ul>
+            </div>
+            <!-- END menu navigation bar -->
+        </div>
+    </nav>
 
     <div id="wrapper">
         <!-- Sidebar -->
@@ -46,6 +115,11 @@
             </div>
             <div id="sidebar-wrapper-wrapper">
                 <ul class="sidebar-nav">
+                    <div id="mode-buttons" class="btn-group btn-group-justified" role="group">
+                        <div class="btn-group" role="group">
+                            <button type="button" id="compare-btn" class="btn btn-default active">Compare</button>
+                        </div>
+                    </div>
                     <li>
                         <a href="#" id="settings" style="line-height: 25px; text-decoration: none;"><i style="vertical-align: middle; text-align: center; margin: 0;"
                                                                                                        class="fa fa-pencil-square-o"
@@ -187,6 +261,10 @@
                             </div>
                         </div>
                     </li>
+                    <li>
+                        <div id="renderErrorMessage"></div>
+                        <!-- Centered btn + link group within the div -->
+                    </li>
                 </ul>
                 <div class="footer" id="footer_div">
                 </div>
@@ -206,7 +284,7 @@
     <!-- /#wrapper -->
 
     <script type="text/javascript">
-
+        $(document).ready(getTrees(${firstTreeId}, ${secondTreeId}, ${firstTreeId}, ${secondTreeId}));
     </script>
 
 </html>

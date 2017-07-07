@@ -252,26 +252,13 @@ function drawTrees(newickIn1, newickIn2, nameTree1, nameTree2) {
      /
      ------*/
     $("#export").click(function (e) {
-        var mode = $("#mode-buttons .active").attr('id');
-        if (mode === "compare-btn") {
-            try {
-                var exportURLGist = treecomp.exportTree(true);
-                $("#exportURLInSingle").attr('href', exportURLGist);
-                $("#exportURLInSingle").html(exportURLGist);
-                $('#myModal').modal('show');
-            } catch (e) {
-                $("#renderErrorMessage").append($('<div class="alert alert-danger" role="alert">Nothing to share</div>')).hide().slideDown(300);
-            }
-        } else if (mode === "view-btn") {
-            try {
-                var exportURLGist = treecomp.exportTree(false);
-                $("#exportURLInSingle").attr('href', exportURLGist);
-                $("#exportURLInSingle").html(exportURLGist);
-                $('#myModal').modal('show');
-            } catch (e) {
-                $("#renderErrorMessage").append($('<div class="alert alert-danger" role="alert">Nothing to share</div>')).hide().slideDown(300);
-            }
-
+        try {
+            var exportURLGist = treecomp.exportTree(true);
+            $("#exportURLInSingle").attr('href', exportURLGist);
+            $("#exportURLInSingle").html(exportURLGist);
+            $('#myModal').modal('show');
+        } catch (e) {
+            $("#renderErrorMessage").append($('<div class="alert alert-danger" role="alert">Nothing to share</div>')).hide().slideDown(300);
         }
     });
 

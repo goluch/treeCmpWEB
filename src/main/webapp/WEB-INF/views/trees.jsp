@@ -47,8 +47,11 @@
             <div id="sidebar-wrapper-wrapper">
                 <ul class="sidebar-nav">
                     <li>
-                        <i style="margin-left: 2px; vertical-align: middle;"" class="fa fa-pencil-square-o" aria-hidden="true"/>
-                        <label style="margin-left: 2px; vertical-align: middle;">Settings&nbsp;</label>
+                        <a href="#" id="settings" style="line-height: 25px; text-decoration: none;"><i style="vertical-align: middle; text-align: center; margin: 0;"
+                                                                                                       class="fa fa-pencil-square-o"
+                                                                                                       aria-hidden="true"></i>
+                            Settings&nbsp;
+                        </a>
                         <div id="settingsPanel">
                             <div class="row" style="line-height: 30px;">
                                 <div class="col-sm-7">

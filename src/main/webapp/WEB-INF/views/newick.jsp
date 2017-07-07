@@ -62,7 +62,7 @@
 	<!-- MAIN CONTAINER -->
 	<div class="container-fluid">
 		
-		<form:form method="POST" commandName="newickStringNew" action="/TreeCmp/checkNewick">
+		<form:form method="POST" commandName="newickStringNew" action="/TreeCmp/report">
 			<div class="row">
 				<div class="col-xs-12 col-xs-offset-0 col-lg-offset-1 main">
  					<div class="form-group">

@@ -105,8 +105,8 @@ public class NewickController {
 		return new ModelAndView("trees", "JsonTrees", new JsonTrees());		
 	}
 	
-	@RequestMapping(value = "/checkNewick", method = RequestMethod.POST)
-	public ModelAndView checkNewick(
+	@RequestMapping(value = "/report", method = RequestMethod.POST)
+	public ModelAndView report(
 			@ModelAttribute("newickStringNew") @Valid Newick newick,
 			BindingResult bindingResult, ModelMap model) throws IOException {
 		NewickUtils nu = new NewickUtils();
@@ -213,7 +213,7 @@ public class NewickController {
 			}
 			outputFileScanner.close();
 
-			return new ModelAndView("checkNewick", model);
+			return new ModelAndView("report", model);
 		}
 	}
 	

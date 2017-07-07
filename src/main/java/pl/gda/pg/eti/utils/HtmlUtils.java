@@ -117,7 +117,7 @@ public class HtmlUtils {
 		}
 		
 		if(isSummary == false && shortTable == false) {
-			row.append(addRadioButtons(header, cells[1], cells[2]));
+			row.append(addButtons(header, cells[1], cells[2]));
 		}
 		else {
 			if(header == true && shortTable == false) {
@@ -132,7 +132,17 @@ public class HtmlUtils {
 		
 		return row.toString();		
 	}
-	
+
+	private String addButtons(Boolean header, String firstId, String secondId) {
+		if(header == true) {
+			return boldedCell("Draw trees");
+		}
+		else {
+			String trees = firstId + "," + secondId;
+			return cell(button(trees));
+		}
+	}
+
 	private String addRadioButtons(Boolean header, String firstId, String secondId) {
 		if(header == true) {
 			return boldedCell("Draw trees");
@@ -159,7 +169,15 @@ public class HtmlUtils {
 		
 		return "<input type=\"radio\" name=\"treesId\" value=\""+ value + "\" onclick=\"popup("+ firstTreeId + "," + secondTreeId + ")\"/>";
 	}
-	
+
+	private String button(String value) {
+		String[] ids = value.split(",");
+		String firstTreeId = ids[0];
+		String secondTreeId = ids[1];
+
+		return "<button type=\"button\" name=\"treesId\" value=\""+ value + "\" onclick=\"popup("+ firstTreeId + "," + secondTreeId + ")\">new window</button>";
+	}
+
 	private final String table_separator = "---------";
 	private final String line_separator = System.getProperty("line.separator");
 	private final String table_start = "<div class=\"table-responsive\"/> <table id=\"reportTable\" class=\"table table-hover\">";

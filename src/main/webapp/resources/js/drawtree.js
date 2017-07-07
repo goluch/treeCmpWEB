@@ -92,8 +92,6 @@ function drawTrees(newickIn1, newickIn2, nameTree1, nameTree2) {
     // hide optional settings by default
     $('.opt').parent().hide();
 
-    hideOptionalSettings();
-
     var mode = $("#mode-buttons .active").attr('id');
     if (mode === "view-btn") {
         $("#compareIn").removeClass("active");
@@ -192,50 +190,6 @@ function drawTrees(newickIn1, newickIn2, nameTree1, nameTree2) {
         div_footer.width(newWidth);
     });
 
-
-    /*
-     /
-     /    VIEW MODE: active windows in sidebar
-     /
-     */
-    $("#best_corresponding_tree").hide();
-
-    $("#view-btn").click(function (e) {
-
-        if ($(window).height() < 550) {
-            $("#sidebar-wrapper").css({
-                "overflow-y": "scroll"
-            });
-        }
-
-        $("#colorScale").empty();
-        $("#action").css({"display": "none"});
-
-        $("#page-content-wrapper").html('<div id="placeholder"><div id="arrow"></div><div id="text"><p>1. Choose view for a single tree, Compare for two trees</p><p>2. Add your trees into the text boxes in newick format</p><p>3. Click "Render"</p></div></div>');
-        $("#newickInSingle").val('');
-        $("#compare-btn").removeClass("active");
-        $("#view-btn").addClass("active");
-        $(".compareIn").css({
-            "display": "none"
-        });
-        $("#best_corresponding_tree").hide();
-        $("#newickInputs").css({
-            "padding-bottom": "0px"
-        });
-        $("#cmp-trees-params").css({
-            "display": "none"
-        });
-        $("#view-tree-params").css({
-            "display": "block"
-        });
-        $("#renderErrorMessage").empty();
-
-        treecomp.changeCanvasSettings({
-            enableFixedButtons: false
-        });
-
-    });
-
     /*
      /
      /    COMPARE MODE: active windows in sidebar
@@ -259,8 +213,7 @@ function drawTrees(newickIn1, newickIn2, nameTree1, nameTree2) {
      /
      ------*/
 
-    $("#renderErrorMessage").empty();
-    hideOptionalSettings();
+    //hideOptionalSettings();
     $("#menu-toggle").click();
 
     try {
@@ -374,32 +327,10 @@ function drawTrees(newickIn1, newickIn2, nameTree1, nameTree2) {
         });
     }
 
-
-    var settingsShown = true;
-    showHideSettingsPanel("show");
-
-    function showHideSettingsPanel(mode) {
-        if (mode == "show") {
-            $("#settingsPanel").slideDown(300);
-            settingsShown = true;
-            $("#sidebar-wrapper").css({
-                "overflow-y": "scroll"
-            });
-        } else if (mode == "hide") {
-            $("#settingsPanel").slideUp(300, function () {
-                settingsShown = false;
-                $(this).css({
-                    "display": "none"
-                });
-
-                //$("#sidebar-wrapper").css({
-                //    "overflow-y": "hidden"
-                //});
-            });
-        } else {
-            console.log("You should not be able to see this!!!!");
-        }
-    }
+    $("#settingsPanel").slideDown(300);
+/*    $("#sidebar-wrapper").css({
+        "overflow-y": "scroll"
+    });*/
 
     $(".sizeAdjust").change(function () {
         treecomp.changeTreeSettings({

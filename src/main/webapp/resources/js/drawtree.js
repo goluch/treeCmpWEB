@@ -371,23 +371,6 @@ function drawTrees(newickIn1, newickIn2, nameTree1, nameTree2) {
         });
     });
 
-
-    //TODO: code to sync version number with tag in git-repo
-    /*var gitHubPath = 'phylo-io';  // example repo
-     var url = 'https://gitolite@lab.dessimoz.org:2222/' + gitHubPath + '/tags';
-
-     $.get(url).done(function (data) {
-     var versions = data.sort(function (v1, v2) {
-     return semver.compare(v2.name, v1.name)
-     });
-     $('#git-tag').html(versions[0].name);
-     console.log($('#git-tag').html(versions[0].name));
-     });*/
-    $('#git-tag').html("1.0.0");
-
-    $("#last-modif").html(document.lastModified);
-
-    
 }
 
 function getTrees(firstTreeId, secondTreeId) {
@@ -408,15 +391,4 @@ function getTrees(firstTreeId, secondTreeId) {
 			alert("something went wrong :(");
 		}
 	});
-}
-
-function extendTrees() {
-	var svgs = $("svg");
-	$(svgs[0]).width(700);
-	$(svgs[1]).width(700);
-}
-
-function clear(divId)
-{
-    document.getElementById(divId).innerHTML = "";
 }

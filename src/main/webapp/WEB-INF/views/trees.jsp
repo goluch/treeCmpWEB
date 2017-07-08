@@ -81,7 +81,7 @@
                 </button>
 
                 <div class="row" style="width: 300px">
-                    <a class="navbar-brand" href="/www/index.html" style="padding-left: 20px;margin-right: 5px; padding-top: 2px">
+                    <a class="navbar-brand" href="http://phylo.io" style="padding-left: 20px;margin-right: 5px; padding-top: 2px">
                         <!-- always show the brand name -->
                         <span class="navbar-brand"
                               style="font-size:x-large; font-weight: bold; margin-top: -3px">Phylo.io</span>
@@ -100,7 +100,7 @@
                         </ul>
                     </li>
                     <li><a href="http://phylo.io/manual.html" class="homelinks">Help</a></li>
-                    <li><a href="about.html" class="homelinks">About</a></li>
+                    <li><a href="http://phylo.io/about.html" class="homelinks">About</a></li>
                 </ul>
             </div>
             <!-- END menu navigation bar -->
@@ -115,17 +115,24 @@
             </div>
             <div id="sidebar-wrapper-wrapper">
                 <ul class="sidebar-nav">
-                    <div id="mode-buttons" class="btn-group btn-group-justified" role="group">
+                    <div id="mode-buttons" class="btn-group btn-group-justified" role="group" style="display: none;">
                         <div class="btn-group" role="group">
-                            <button type="button" id="compare-btn" class="btn btn-default active">Compare</button>
+                            <button type="button" id="compare-btn" class="btn btn-default active" >Compare</button>
                         </div>
                     </div>
                     <li>
-                        <a href="#" id="settings" style="line-height: 25px; text-decoration: none;"><i style="vertical-align: middle; text-align: center; margin: 0;"
-                                                                                                       class="fa fa-pencil-square-o"
-                                                                                                       aria-hidden="true"></i>
+                        <label href="#" id="errors" style="line-height: 25px; text-decoration: none;"><i style="vertical-align: middle; text-align: center; margin: 0;" class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                            Errors&nbsp;
+                        </label>
+                    </li>
+                    <li>
+                        <div class="alert alert-success" role="alert">No errors</div>
+                        <div id="renderErrorMessage"></div>
+                    </li>
+                    <li>
+                        <label href="#" id="settings" style="line-height: 25px; text-decoration: none;"><i style="vertical-align: middle; text-align: center; margin: 0;" class="fa fa-pencil-square-o" aria-hidden="true"></i>
                             Settings&nbsp;
-                        </a>
+                        </label>
                         <div id="settingsPanel">
                             <div class="row" style="line-height: 30px;">
                                 <div class="col-sm-7">
@@ -260,10 +267,6 @@
                                     multiple search results</label>
                             </div>
                         </div>
-                    </li>
-                    <li>
-                        <div id="renderErrorMessage"></div>
-                        <!-- Centered btn + link group within the div -->
                     </li>
                 </ul>
                 <div class="footer" id="footer_div">

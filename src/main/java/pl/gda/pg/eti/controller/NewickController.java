@@ -10,6 +10,11 @@ import java.util.Scanner;
 import javax.servlet.ServletContext;
 import javax.validation.Valid;
 
+import org.springframework.boot.*;
+import org.springframework.boot.autoconfigure.*;
+import org.springframework.stereotype.*;
+import org.springframework.web.bind.annotation.*;
+
 import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -39,6 +44,7 @@ import pl.gda.pg.eti.utils.NewickValidator;
 
 @Controller
 @Scope("session")
+@EnableAutoConfiguration
 public class NewickController {
 	
 	private static String METRICS = "-d";
@@ -59,6 +65,10 @@ public class NewickController {
 	private NewickSplitter referencedTreesSplitter;
 	private String reportStr;
 	private Mode comparisionMode;
+
+	public static void main(String[] args) throws Exception {
+		SpringApplication.run(NewickController.class, args);
+	}
 
 /*	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String hello() {

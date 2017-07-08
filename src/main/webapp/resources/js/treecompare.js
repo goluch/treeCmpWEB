@@ -3550,26 +3550,24 @@ var TreeCompare = function(){
     function changeAutoCollapseDepth(depth) {
         settings.autoCollapse = depth;
 
-        for (var i = 0; i < renderedTrees.length; i++) {
-            if (depth === null) {
-                uncollapseAll(renderedTrees[i].root);
-            } else {
-                limitDepth(renderedTrees[i].root, depth);
-            }
+        if (depth === null) {
+            uncollapseAll(renderedTrees[0].root);
+            uncollapseAll(renderedTrees[1].root);
+        } else {
+            limitDepth(renderedTrees[0].root, depth);
+            limitDepth(renderedTrees[1].root, depth);
         }
 
-        if (renderedTrees.length === 2) {
-            settings.loadingCallback();
-            setTimeout(function() {
-                // renderedTrees and trees index do not
-                // necessarily correspond
-                getVisibleBCNsUsingWorkers(findTreeIndex(renderedTrees[0].name), findTreeIndex(renderedTrees[1].name));
-                update(renderedTrees[0].root, renderedTrees[0].data);
-                update(renderedTrees[1].root, renderedTrees[1].data);
-            }, 2);
-        } else {
+        settings.loadingCallback();
+        setTimeout(function() {
+            // renderedTrees and trees index do not
+            // necessarily correspond
+            getVisibleBCNsUsingWorkers(findTreeIndex(renderedTrees[0].name), findTreeIndex(renderedTrees[1].name));
             update(renderedTrees[0].root, renderedTrees[0].data);
-        }
+            update(renderedTrees[1].root, renderedTrees[1].data);
+            settings.loadedCallback();
+        }, 2);
+
     }
 
     /*---------------

@@ -22,8 +22,8 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script src="http://d3js.org/d3.v3.min.js"></script>
 
-    <script src="<c:url value="/resources/js/drawtree.js"/>"></script>
     <script src="<c:url value="/resources/js/treecompare.js"/>"></script>
+    <script src="<c:url value="/resources/js/drawtree.js"/>"></script>
     <script src="<c:url value="/resources/js/underscore.min.js"/>"></script>
     <script src="<c:url value="/resources/js/spin.min.js"/>"></script>
     <script src="<c:url value="/resources/js/circular-json.js"/>"></script>
@@ -287,6 +287,7 @@
     <!-- /#wrapper -->
 
     <script type="text/javascript">
+        var treecomp = null;
         $(document).ready(getTrees(${firstTreeId}, ${secondTreeId}, ${firstTreeId}, ${secondTreeId}));
     </script>
 

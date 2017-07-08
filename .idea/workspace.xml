@@ -5,6 +5,7 @@
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/trees.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/trees.jsp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/drawtree.js" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/drawtree.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/treecompare.js" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/treecompare.js" />
     </list>
     <ignored path="$PROJECT_DIR$/target/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -21,20 +22,38 @@
         <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/js/drawtree.js">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="194">
-              <caret line="260" column="47" lean-forward="true" selection-start-line="260" selection-start-column="47" selection-end-line="260" selection-end-column="114" />
+              <caret line="230" column="40" lean-forward="false" selection-start-line="230" selection-start-column="17" selection-end-line="230" selection-end-column="40" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="trees.jsp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="treecompare.js" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/js/treecompare.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="415">
+              <caret line="3568" column="14" lean-forward="true" selection-start-line="3568" selection-start-column="14" selection-end-line="3568" selection-end-column="14" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="trees.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/trees.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="100">
-              <caret line="129" column="59" lean-forward="true" selection-start-line="129" selection-start-column="59" selection-end-line="129" selection-end-column="59" />
-              <folding>
-                <element signature="n#style#0;n#div#0;n#ul#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-              </folding>
+            <state relative-caret-position="46">
+              <caret line="260" column="21" lean-forward="true" selection-start-line="260" selection-start-column="21" selection-end-line="260" selection-end-column="21" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TreeCmp.iml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/TreeCmp.iml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="374">
+              <caret line="22" column="107" lean-forward="true" selection-start-line="22" selection-start-column="107" selection-end-line="22" selection-end-column="107" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -43,9 +62,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>newickIn1</find>
-      <find>add</find>
-      <find>menu-toggle</find>
       <find>page-content-wrapper</find>
       <find>fa fa-2x fa-arrow-circle-left</find>
       <find>wrapper</find>
@@ -68,11 +84,14 @@
       <find>exportURLInSingle</find>
       <find>aria-hidden</find>
       <find>exportURLGist</find>
-      <find>treecomp</find>
       <find>hidd</find>
       <find>hidden</find>
       <find>compare</find>
       <find>renderErrorMessage</find>
+      <find>treecomp</find>
+      <find>extendTrees();</find>
+      <find>COLLAPSING BY LEVEL BUTTON</find>
+      <find>changeAutoCollapseDepth</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -99,7 +118,6 @@
         <option value="$PROJECT_DIR$/src/main/java/pl/gda/pg/eti/WebConfig.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/checkNewick.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/index.html" />
-        <option value="$PROJECT_DIR$/src/main/webapp/resources/js/treecompare.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/resources/js/navigation.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/resources/css/simple-sidebar.css" />
         <option value="$PROJECT_DIR$/src/main/webapp/resources/css/treecmp.css" />
@@ -107,8 +125,9 @@
         <option value="$PROJECT_DIR$/src/main/java/pl/gda/pg/eti/controller/NewickController.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/newick.jsp" />
         <option value="$PROJECT_DIR$/src/main/java/pl/gda/pg/eti/utils/HtmlUtils.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/resources/js/drawtree.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/views/trees.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/resources/js/drawtree.js" />
+        <option value="$PROJECT_DIR$/src/main/webapp/resources/js/treecompare.js" />
       </list>
     </option>
   </component>
@@ -160,7 +179,6 @@
     </navigator>
     <panes>
       <pane id="Scope" />
-      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -465,6 +483,7 @@
           </PATH>
         </subPane>
       </pane>
+      <pane id="Scratches" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -1023,15 +1042,15 @@
       <workItem from="1499431393858" duration="2061000" />
       <workItem from="1499449097417" duration="7682000" />
       <workItem from="1499501899947" duration="2701000" />
+      <workItem from="1499504726238" duration="5589000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="63093000" />
+    <option name="totallyTimeSpent" value="68682000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Nl-Palette" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1077,7 +1096,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="6" />
+      <option name="time" value="7" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1281,7 +1300,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
           <caret line="3" column="20" lean-forward="false" selection-start-line="3" selection-start-column="20" selection-end-line="3" selection-end-column="20" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1289,7 +1307,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="646">
           <caret line="38" column="38" lean-forward="false" selection-start-line="38" selection-start-column="18" selection-end-line="38" selection-end-column="38" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1308,13 +1325,6 @@
       </provider>
     </entry>
     <entry file="file://D:/TreeCmpWEB_OK/TreeCmp.iml" />
-    <entry file="file://$PROJECT_DIR$/TreeCmp.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="374">
-          <caret line="22" column="53" lean-forward="true" selection-start-line="22" selection-start-column="53" selection-end-line="22" selection-end-column="53" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/lib/config/config.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="476">
@@ -1366,14 +1376,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/js/treecompare.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="576">
-          <caret line="4879" column="50" lean-forward="false" selection-start-line="4879" selection-start-column="50" selection-end-line="4879" selection-end-column="50" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/js/drawtree_TnT_Tree.js">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1382,21 +1384,35 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/js/drawtree.js">
+    <entry file="file://$PROJECT_DIR$/TreeCmp.iml">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="260" column="47" lean-forward="true" selection-start-line="260" selection-start-column="47" selection-end-line="260" selection-end-column="114" />
+        <state relative-caret-position="374">
+          <caret line="22" column="107" lean-forward="true" selection-start-line="22" selection-start-column="107" selection-end-line="22" selection-end-column="107" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/views/trees.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="100">
-          <caret line="129" column="59" lean-forward="true" selection-start-line="129" selection-start-column="59" selection-end-line="129" selection-end-column="59" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#ul#0;n#div#1;n#div#0;n#div#1;n#body#0;n#html#0;n#!!top" expanded="true" />
-          </folding>
+        <state relative-caret-position="46">
+          <caret line="260" column="21" lean-forward="true" selection-start-line="260" selection-start-column="21" selection-end-line="260" selection-end-column="21" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/js/drawtree.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="194">
+          <caret line="230" column="40" lean-forward="false" selection-start-line="230" selection-start-column="17" selection-end-line="230" selection-end-column="40" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/js/treecompare.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="415">
+          <caret line="3568" column="14" lean-forward="true" selection-start-line="3568" selection-start-column="14" selection-end-line="3568" selection-end-column="14" />
+          <folding />
         </state>
       </provider>
     </entry>

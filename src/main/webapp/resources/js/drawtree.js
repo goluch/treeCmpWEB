@@ -57,7 +57,7 @@ function drawTrees(newickIn1, newickIn2, nameTree1, nameTree2) {
     var spinnerTarget = document.getElementById("spinner-container");
 
     var gistID = $(location).attr('hash').split(/\s*[#-]\s*/); //get gist id from url
-    var treecomp = TreeCompare().init({
+    treecomp = TreeCompare().init({
         scaleColor: "black",
         loadingCallback: function () {
             $('#spinner-container').show();
@@ -205,6 +205,59 @@ function drawTrees(newickIn1, newickIn2, nameTree1, nameTree2) {
     treecomp.changeCanvasSettings({
         enableFixedButtons: true
     });
+
+
+    /*------------
+     /
+     /    COLLAPSING BY LEVEL BUTTON
+     /
+     ------------*/
+    $("#collapseInc").click(function (e) {
+        var amountText = $("#collapseAmount").html();
+        var amount = 0;
+        var maxAmount = treecomp.getMaxAutoCollapse();
+        if (amountText !== "OFF") {
+            amount = parseInt(amountText);
+            amount += 1;
+            if (amount == maxAmount) {
+                $("#collapseAmount").html("OFF");
+            } else {
+                $("#collapseAmount").html(amount.toString());
+            }
+        } else {
+            amount = 0;
+            $("#collapseAmount").html("0");
+        }
+        treecomp.changeAutoCollapseDepth(amount);
+
+    });
+
+    $("#collapseDec").click(function (e) {
+        var amountText = $("#collapseAmount").html();
+        var amount = 0;
+        var maxAmount = treecomp.getMaxAutoCollapse();
+
+        if (amountText !== "0") {
+            if (amountText === "OFF") {
+                amount = maxAmount;
+            } else {
+                amount = parseInt(amountText);
+            }
+            amount -= 1;
+            if (amount < 0) {
+                amount = null;
+                $("#collapseAmount").html("OFF");
+            } else {
+                $("#collapseAmount").html(amount.toString());
+            }
+        } else {
+            amount = null;
+            $("#collapseAmount").html("OFF");
+        }
+
+        treecomp.changeAutoCollapseDepth(amount);
+    });
+
 
     /*------
      /
@@ -385,7 +438,6 @@ function getTrees(firstTreeId, secondTreeId) {
 		data: "{\"firstTreeId\" : \""+ firstTreeId +"\", \"secondTreeId\" : \""+ secondTreeId +"\"}",
 		success: function(data) {
 			drawTrees(data.firstTreeNewick, data.secondTreeNewick);
-			extendTrees();
 		},
 		error: function() {
 			alert("something went wrong :(");

@@ -82,6 +82,24 @@ public class NewickController {
 		if (confParser.getMetricConfigFilePath().equals("")) {
 			String configPath = servletContext
 					.getRealPath("/WEB-INF/lib/config/");
+
+			confParser.setMetricConfigFilePath(configPath);
+		}
+
+		confParser.clearAndSetAvailableMetrics();
+
+		model.addAttribute("rootedMetrics", confParser.getAvailableRootedMetricsWithCmd());
+		model.addAttribute("unrootedMetrics", confParser.getAvailableUnrootedMetricsWithCmd());
+
+		return new ModelAndView("inputform", "newickStringNew", new Newick());
+	}
+
+/*	@RequestMapping(value = "/WEB", method = RequestMethod.GET)
+	public ModelAndView getNewick(Model model) {
+
+		if (confParser.getMetricConfigFilePath().equals("")) {
+			String configPath = servletContext
+					.getRealPath("/WEB-INF/lib/config/");
 			
 			confParser.setMetricConfigFilePath(configPath);
 		}
@@ -92,7 +110,7 @@ public class NewickController {
 		model.addAttribute("unrootedMetrics", confParser.getAvailableUnrootedMetricsWithCmd());
 
 		return new ModelAndView("newick", "newickStringNew", new Newick());
-	}
+	}*/
 	
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) { 

@@ -6,6 +6,7 @@
 	<groupId>pl.gda.pg.eti</groupId>
 	<artifactId>TreeCmp</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
+	<!--<packaging>jar</packaging>-->
 	<packaging>war</packaging>
 
 	<name>TreeCmp</name>
@@ -131,13 +132,33 @@
 			<artifactId>jackson-mapper-asl</artifactId>
 			<version>1.9.10</version>
 		</dependency>
+
+<!--		<dependency>
+			<groupId>org.thymeleaf</groupId>
+			<artifactId>thymeleaf-spring4</artifactId>
+			<version>2.1.3.RELEASE</version>
+		</dependency>-->
+
 	</dependencies>
 
 	<build>
+		<defaultGoal>install</defaultGoal>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<version>1.5.4.RELEASE</version>
+				<configuration>
+					<fork>true</fork>
+					<mainClass>pl.gda.pg.eti.controller.NewickController</mainClass>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>repackage</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>

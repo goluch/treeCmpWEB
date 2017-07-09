@@ -70,12 +70,6 @@ public class NewickController {
 		SpringApplication.run(NewickController.class, args);
 	}
 
-	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String greeting(@RequestParam(value = "name", required = false, defaultValue = "World") String name, Model model) {
-		model.addAttribute("name", name);
-		return "greeting";
-	}
-
 	@RequestMapping(value = "/WEB", method = RequestMethod.GET)
 	public ModelAndView getNewick(Model model) {
 
@@ -93,24 +87,6 @@ public class NewickController {
 
 		return new ModelAndView("inputform", "newickStringNew", new Newick());
 	}
-
-/*	@RequestMapping(value = "/WEB", method = RequestMethod.GET)
-	public ModelAndView getNewick(Model model) {
-
-		if (confParser.getMetricConfigFilePath().equals("")) {
-			String configPath = servletContext
-					.getRealPath("/WEB-INF/lib/config/");
-			
-			confParser.setMetricConfigFilePath(configPath);
-		}
-		
-		confParser.clearAndSetAvailableMetrics();
-
-		model.addAttribute("rootedMetrics", confParser.getAvailableRootedMetricsWithCmd());
-		model.addAttribute("unrootedMetrics", confParser.getAvailableUnrootedMetricsWithCmd());
-
-		return new ModelAndView("newick", "newickStringNew", new Newick());
-	}*/
 	
 	@InitBinder
 	protected void initBinder(WebDataBinder binder) { 

@@ -70,10 +70,11 @@ public class NewickController {
 		SpringApplication.run(NewickController.class, args);
 	}
 
-/*	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String hello() {
-		return "index";
-	}*/
+	@RequestMapping(value = "/", method = RequestMethod.GET)
+	public String greeting(@RequestParam(value = "name", required = false, defaultValue = "World") String name, Model model) {
+		model.addAttribute("name", name);
+		return "greeting";
+	}
 
 	@RequestMapping(value = "/WEB", method = RequestMethod.GET)
 	public ModelAndView getNewick(Model model) {

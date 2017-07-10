@@ -135,7 +135,7 @@ public class HtmlUtils {
 
 	private String addButtons(Boolean header, String firstId, String secondId) {
 		if(header == true) {
-			return boldedCell("Draw trees");
+			return boldedCell("Draw trees in");
 		}
 		else {
 			String trees = firstId + "," + secondId;
@@ -145,7 +145,7 @@ public class HtmlUtils {
 
 	private String addRadioButtons(Boolean header, String firstId, String secondId) {
 		if(header == true) {
-			return boldedCell("Draw trees");
+			return boldedCell("Draw trees in");
 		}
 		else {
 			String trees = firstId + "," + secondId;
@@ -175,7 +175,7 @@ public class HtmlUtils {
 		String firstTreeId = ids[0];
 		String secondTreeId = ids[1];
 
-		return "<button type=\"button\" name=\"treesId\" value=\""+ value + "\" onclick=\"popup("+ firstTreeId + "," + secondTreeId + ")\">new window</button>";
+		return "<button type=\"button\" name=\"treesId\" value=\""+ value + "\" onclick=\"popup("+ firstTreeId + "," + secondTreeId + ")\" class=\"btn\" \">Phylo.io</button>";
 	}
 
 	private final String table_separator = "---------";

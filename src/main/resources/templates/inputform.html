@@ -6,7 +6,7 @@
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" />
-	<link rel="stylesheet" th:href="@{/resources/css/treecmp.css}" type="text/css" />
+	<link rel="stylesheet" th:href="@{resources/css/treecmp.css}" type="text/css" />
 
 	<style>
 		.form-group .item{white-space: nowrap; display:inline}
@@ -14,9 +14,9 @@
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-	<script src="/resources/js/bootstrap-treecmp.js"></script>
-    <script src="/resources/js/navigation.js"></script>
-	<script src="/resources/js/treecompare.js"></script>
+	<script src="resources/js/bootstrap-treecmp.js"></script>
+    <script src="resources/js/navigation.js"></script>
+	<script src="resources/js/treecompare.js"></script>
 
 </head>
 <body>
@@ -34,7 +34,7 @@
 					<span class="icon-bar"></span>
 				</button>
 				<a class="navbar-brand" href="#">
-					<img alt="TreeCmp" src="/resources/img/treecmp_logo.jpg" />
+					<img alt="TreeCmp" src="resources/img/treecmp_logo.jpg" />
 				</a>
 			</div>
 
@@ -55,24 +55,24 @@
 	<!-- MAIN CONTAINER -->
 	<div class="container-fluid">
 
-		<form method="post" th:object="${newickStringNew}" th:action="@{/TreeCmp/report}">
+		<form method="post" th:object="${newickStringNew}" th:action="@{/report}">
 			<div class="row">
 				<div class="col-xs-12 col-xs-offset-0 col-lg-offset-1 main">
 					<div class="form-group">
 						<div class="radio">
 							<label>
-								<input type="radio" th:value="*{comparisionMode}" id="rbMatrix" value="-m" onclick="HideSecondWindow();"/>
+								<input type="radio" th:field="*{comparisionMode}" id="rbMatrix" value="-m" onclick="HideSecondWindow();"/>
 								Matrix comparison
 							</label>
 						</div>
 						<div class="radio">
 							<label>
-								<input type="radio" th:value="*{comparisionMode}" id="rbBipartite" value="-r" onclick="ShowSecondWindow();"/>
+								<input type="radio" th:field="*{comparisionMode}" id="rbBipartite" value="-r" onclick="ShowSecondWindow();"/>
 								Bipartite comparison
 							</label>
 						</div>
 						<div style="margin-left: 15px;">
-							<errors th:value="*{comparisionMode}" cssClass="error" />
+							<error th:errors="*{comparisionMode}" cssClass="error" />
 						</div>
 					</div>
 
@@ -95,11 +95,11 @@
 									</tr>
 									</tbody>
 								</table>
-								<textarea path="newickStringFirst" class="form-control"
+								<textarea th:field="*{newickStringFirst}" class="form-control"
 											   rows="14" id="newickInputFirst"
 											   placeholder="Paste or drag and drop your trees in newick format separated by ;" style="resize: none;"></textarea>
 								<div>
-									<errors path="newickStringFirst" cssClass="error" />
+									<errors th:errors="*{newickStringFirst}" class="error" />
 								</div>
 								<div class="exmpBtn smallMargin" id="addExmpTreeToFirstWindow"><a href="#">Example Trees</a></div>
 
@@ -121,11 +121,11 @@
 									</tr>
 									</tbody>
 								</table>
-								<textarea path="newickStringSecond" class="form-control"
+								<textarea th:field="*{newickStringSecond}" class="form-control"
 											   rows="14" id="newickInputSecond"
 											   placeholder="Paste or drag and drop your trees in newick format separated by ;" style="resize: none;"></textarea>
 								<div>
-									<errors path="newickStringSecond" cssClass="error" />
+									<errors th:errors="*{newickStringSecond}" class="error" />
 								</div>
 								<div class="exmpBtn smallMargin" id="addExmpTreeToSecondWindow"><a href="#">Example Trees</a></div>
 							</div>
@@ -145,9 +145,9 @@
 										<div id="collapse1" class="panel-collapse collapse" role="tabpanel" aria-labelledby="infoBox1">
 											<div class="panel-body">
 												<div class="form-group">
-													<li th:each="item, stat : ${rootedMetrics}">
-														<input type="checkbox" th:text="${item.value}" />
-													</li>
+													<div th:each="item, stat : ${rootedMetrics}">
+														<input type="checkbox" th:field="*{rootedMetrics}" th:value="${item.key}" th:text="${item.value}" />
+													</div>
 												</div>
 											</div>
 										</div>
@@ -161,15 +161,15 @@
 										<div id="collapse2" class="panel-collapse collapse" role="tabpanel" aria-labelledby="infoBox2">
 											<div class="panel-body">
 												<div class="form-group">
-													<li th:each="item, stat : ${unrootedMetrics}">
-														<input type="checkbox" th:text="${item.value}" />
-													</li>
+													<div th:each="item, stat : ${unrootedMetrics}">
+														<input type="checkbox" th:field="*{unrootedMetrics}" th:value="${item.key}" th:text="${item.value}" />
+													</div>
 												</div>
 											</div>
 										</div>
 									</div>
 									<div>
-										<errors path="hasMetrics" cssClass="error" />
+										<errors th:errors="*{hasMetrics}" class="error" />
 									</div>
 									<div class="panel panel-default">
 										<div class="panel-heading" role="tab" id="infoBox3">
@@ -181,15 +181,15 @@
 										</div>
 										<div id="collapse3" class="panel-collapse collapse" role="tabpanel" aria-labelledby="infoBox3">
 											<div class="panel-body">
-												<li>
-													<input type="checkbox" th:value="*{normalizedDistances}" /> Normalized distances
-												</li>
-												<li>
-													<input type="checkbox" th:value="*{pruneTrees}" /> Prune trees
-												</li>
-												<li>
-													<input type="checkbox" th:value="*{includeSummary}" /> Include summary
-												</li>
+												<div>
+													<input type="checkbox" th:field="*{normalizedDistances}" /> Normalized distances
+												</div>
+												<div>
+													<input type="checkbox" th:field="*{pruneTrees}" /> Prune trees
+												</div>
+												<div>
+													<input type="checkbox" th:field="*{includeSummary}" /> Include summary
+												</div>
 											</div>
 										</div>
 									</div>
@@ -205,8 +205,6 @@
 				</div>
 			</div>
 		</form>
-		<errors path="newickStringFirst">
-		</errors>
 	</div>
 	<!-- FOOTER -->
 	<div class="row footer">

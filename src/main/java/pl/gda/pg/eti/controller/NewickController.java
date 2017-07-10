@@ -88,38 +88,18 @@ public class NewickController {
 		return new ModelAndView("inputform", "newickStringNew", new Newick());
 	}
 	
-	@InitBinder
-	protected void initBinder(WebDataBinder binder) { 
-	}
-
-	@RequestMapping(value = "/trees/", method = RequestMethod.GET)
-	public ModelAndView visualizeTrees(@RequestParam Map<String, String> treesIds, Model model) {
-		try	{
-			int firstTreeId = Integer.parseInt(treesIds.get("firstTreeId"));
-			model.addAttribute("firstTreeId", firstTreeId);
-			
-			int secondTreeId = Integer.parseInt(treesIds.get("secondTreeId"));			
-			model.addAttribute("secondTreeId", secondTreeId);
-			
-			String shortTable = htmlUtils.GenerateShortenedReport(reportStr, firstTreeId, secondTreeId);
-			model.addAttribute("shortTable", shortTable);
-		}
-		catch(Exception e) {
-		}		
-		
-		return new ModelAndView("trees", "JsonTrees", new JsonTrees());		
-	}
-	
 	@RequestMapping(value = "/report", method = RequestMethod.POST)
 	public ModelAndView report(
 			@ModelAttribute("newickStringNew") @Valid Newick newick,
-			BindingResult bindingResult, ModelMap model) throws IOException {
+			BindingResult bindingResult,
+			ModelMap model) throws IOException {
+
 		NewickUtils nu = new NewickUtils();
 		
 		if (arguments != null) {
 			arguments.clear();
 		}
-		
+
 		File inputFile = nu.createTempFileWithGivenContent(newick.getNewickStringFirst());
 		File refTreeFile = null;
 		
@@ -156,8 +136,8 @@ public class NewickController {
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("rootedMetrics", confParser.getAvailableRootedMetricsWithCmd());
 			model.addAttribute("unrootedMetrics", confParser.getAvailableUnrootedMetricsWithCmd());
-			
-			return new ModelAndView("newick", "newickStringNew", newick);
+
+			return new ModelAndView("inputform", "newickStringNew", newick);
 		} else {			
 			addMetricsToArguments(newick);
 
@@ -220,6 +200,24 @@ public class NewickController {
 
 			return new ModelAndView("report", model);
 		}
+	}
+
+	@RequestMapping(value = "/trees/", method = RequestMethod.GET)
+	public ModelAndView visualizeTrees(@RequestParam Map<String, String> treesIds, Model model) {
+		try	{
+			int firstTreeId = Integer.parseInt(treesIds.get("firstTreeId"));
+			model.addAttribute("firstTreeId", firstTreeId);
+
+			int secondTreeId = Integer.parseInt(treesIds.get("secondTreeId"));
+			model.addAttribute("secondTreeId", secondTreeId);
+
+			String shortTable = htmlUtils.GenerateShortenedReport(reportStr, firstTreeId, secondTreeId);
+			model.addAttribute("shortTable", shortTable);
+		}
+		catch(Exception e) {
+		}
+
+		return new ModelAndView("trees", "JsonTrees", new JsonTrees());
 	}
 	
 	@RequestMapping(value="/trees", method=RequestMethod.POST)	

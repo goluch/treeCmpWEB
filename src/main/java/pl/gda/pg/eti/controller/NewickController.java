@@ -2,6 +2,7 @@ package pl.gda.pg.eti.controller;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -12,6 +13,7 @@ import javax.validation.Valid;
 
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.*;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.*;
 import org.springframework.web.bind.annotation.*;
 
@@ -73,11 +75,14 @@ public class NewickController {
 	@RequestMapping(value = "/WEB", method = RequestMethod.GET)
 	public ModelAndView getNewick(Model model) {
 
-		if (confParser.getMetricConfigFilePath().equals("")) {
-			String configPath = servletContext
-					.getRealPath("/WEB-INF/lib/config/");
-
-			confParser.setMetricConfigFilePath(configPath);
+		if (confParser.getMetricConfigFileStream()== null) {
+			InputStream configFileStream = null;
+			try {
+				configFileStream = new ClassPathResource("static/config/config.xml").getInputStream();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+			confParser.setMetricConfigFileStream(configFileStream);
 		}
 
 		confParser.clearAndSetAvailableMetrics();

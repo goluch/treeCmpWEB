@@ -19,9 +19,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /////////////////////////////////////////////
@@ -29,7 +27,7 @@ import java.util.Map;
 ////////////////////////////////////////////
 public class ConfigParser {
 
-	private String metricConfigFilePath = "";
+	private InputStream metricConfigFileStream;
 	
 	public ConfigParser() {
 		
@@ -57,20 +55,12 @@ public class ConfigParser {
 
 		availableRootedMetricsWithCmd.clear();
 		availableUnrootedMetricsWithCmd.clear();
-		
-		InputStream ipStream = null;
+
 		try {
-			String path = String.format("%s/config.xml", metricConfigFilePath);
-			ipStream = new FileInputStream(path);
-		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		try {
-			if (ipStream == null) {
+			if (metricConfigFileStream == null) {
 				return;
 			}
-			Document doc = readXml(ipStream);
+			Document doc = readXml(metricConfigFileStream);
 
 			NodeList nList = doc.getElementsByTagName("metric");
 
@@ -126,12 +116,12 @@ public class ConfigParser {
 		return db.parse(is);
 	}
 
-	public String getMetricConfigFilePath() {
-		return metricConfigFilePath;
+	public InputStream getMetricConfigFileStream() {
+		return metricConfigFileStream;
 	}
 
-	public void setMetricConfigFilePath(String metricConfigFilePath) {
-		this.metricConfigFilePath = metricConfigFilePath;
+	public void setMetricConfigFileStream(InputStream metricConfigFileStream) {
+		this.metricConfigFileStream = metricConfigFileStream;
 	}
 
 }

@@ -18,13 +18,9 @@ import treecmp.metric.Metric;
 public class TreeCmpExecutor {
 
 	private String[] args;
-	private String conf = "";
-	private String dataDir = "";
-	
-	public TreeCmpExecutor(String configPath, String dataPath, String[] args) {
+
+	public TreeCmpExecutor(String[] args) {
 		this.args = args;
-		conf = configPath + "/config.xml";
-		dataDir = dataPath;
 	}
 
 	public void Execute() {
@@ -39,13 +35,15 @@ public class TreeCmpExecutor {
 		}
 		String runtimePath = runtimePathTemp;
 		try {
-			runtimePath = URLDecoder.decode(runtimePathTemp, "UTF-8");
+			runtimePath = URLDecoder.decode( runtimePathTemp, "UTF-8");
 		} catch (UnsupportedEncodingException ex) {
 		}
-		
 
         try {
-            ConfigSettings.initConfig(conf, dataDir);
+            ConfigSettings.initConfig(
+            		this.getClass().getClassLoader().getResource("static/config/config.xml").getPath(),
+					this.getClass().getClassLoader().getResource("static/data").getPath()
+			);
         } catch (FileNotFoundException ex) {
             //can not find the configuration file
             System.out.println(ex.getMessage());

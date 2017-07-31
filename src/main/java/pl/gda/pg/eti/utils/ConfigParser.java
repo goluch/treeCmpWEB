@@ -35,18 +35,12 @@ public class ConfigParser {
 		availableUnrootedMetricsWithCmd = new HashMap<String, String>();
 	}
 
-	@Autowired
-	ServletContext servletContext;
-
 	private Map<String, String> availableRootedMetricsWithCmd;
 	private Map<String, String> availableUnrootedMetricsWithCmd;
 
-	
-	
 	public Map<String, String> getAvailableRootedMetricsWithCmd() {
 		return availableRootedMetricsWithCmd;
 	}
-	
 	public Map<String, String> getAvailableUnrootedMetricsWithCmd() {
 		return availableUnrootedMetricsWithCmd;
 	}
@@ -112,7 +106,6 @@ public class ConfigParser {
 		DocumentBuilder db = null;
 		db = dbf.newDocumentBuilder();
 		db.setEntityResolver(new NullResolver());
-
 		return db.parse(is);
 	}
 

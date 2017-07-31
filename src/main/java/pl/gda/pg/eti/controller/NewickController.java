@@ -48,7 +48,7 @@ import pl.gda.pg.eti.utils.NewickValidator;
 @Scope("session")
 @EnableAutoConfiguration
 public class NewickController {
-	
+
 	private static String METRICS = "-d";
 	private static String NORMALIZED_DISTANCES = "-N";
 	private static String PRUNE_COMPARED = "-P";
@@ -62,7 +62,7 @@ public class NewickController {
 	private List<String> arguments = new ArrayList<String>();
 	private ConfigParser confParser = new ConfigParser();
 	private HtmlUtils htmlUtils = new HtmlUtils();
-	
+
 	private NewickSplitter splitter;
 	private NewickSplitter referencedTreesSplitter;
 	private String reportStr;
@@ -75,15 +75,13 @@ public class NewickController {
 	@RequestMapping(value = "/WEB", method = RequestMethod.GET)
 	public ModelAndView getNewick(Model model) {
 
-		if (confParser.getMetricConfigFileStream()== null) {
-			InputStream configFileStream = null;
-			try {
-				configFileStream = new ClassPathResource("static/config/config.xml").getInputStream();
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-			confParser.setMetricConfigFileStream(configFileStream);
+		InputStream configFileStream = null;
+		try {
+			configFileStream = new ClassPathResource("static/config/config.xml").getInputStream();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
+		confParser.setMetricConfigFileStream(configFileStream);
 
 		confParser.clearAndSetAvailableMetrics();
 
@@ -92,7 +90,7 @@ public class NewickController {
 
 		return new ModelAndView("inputform", "newickStringNew", new Newick());
 	}
-	
+
 	@RequestMapping(value = "/report", method = RequestMethod.POST)
 	public ModelAndView report(
 			@ModelAttribute("newickStringNew") @Valid Newick newick,
@@ -100,62 +98,62 @@ public class NewickController {
 			ModelMap model) throws IOException {
 
 		NewickUtils nu = new NewickUtils();
-		
+
 		if (arguments != null) {
 			arguments.clear();
 		}
 
 		File inputFile = nu.createTempFileWithGivenContent(newick.getNewickStringFirst());
 		File refTreeFile = null;
-		
+
 		if (newick.getComparisionMode().equals(NewickUtils.MATRIX_COMPARISION_MODE)) {
 			arguments.add(NewickUtils.MATRIX_COMPARISION_MODE);
 			comparisionMode = Mode.MATRIX;
 			String normalizedFirstNewick = NewickUtils.GetNormalizedNewickString(newick.getNewickStringFirst());
 			splitter = new NewickSplitter(normalizedFirstNewick);
-			
+
 		} else if (newick.getComparisionMode().equals(NewickUtils.BIPARTITE_COMPARISION_MODE)) {
 			arguments.add(NewickUtils.BIPARTITE_COMPARISION_MODE);
 			comparisionMode = Mode.BIPARTITE;
-            refTreeFile = nu.createTempFileWithGivenContent(newick.getNewickStringSecond());
-            
-            String normalizedFirstNewick = NewickUtils.GetNormalizedNewickString(newick.getNewickStringFirst());
+			refTreeFile = nu.createTempFileWithGivenContent(newick.getNewickStringSecond());
+
+			String normalizedFirstNewick = NewickUtils.GetNormalizedNewickString(newick.getNewickStringFirst());
 			splitter = new NewickSplitter(normalizedFirstNewick);
 			String normalizedSecondNewick = NewickUtils.GetNormalizedNewickString(newick.getNewickStringSecond());
 			referencedTreesSplitter = new NewickSplitter(normalizedSecondNewick);
 
-            arguments.add(String.format("%s", refTreeFile.getAbsolutePath()));
+			arguments.add(String.format("%s", refTreeFile.getAbsolutePath()));
 		}
 
-		
+
 		NewickValidator newickVal = new NewickValidator(newick);
-		
+
 		newickVal.validate(inputFile, refTreeFile);
-		
+
 		if (!newickVal.getErrors().isEmpty()) {
 			for (ObjectError objErr : newickVal.getErrors()) {
 				bindingResult.addError(objErr);
 			}
 		}
-		
+
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("rootedMetrics", confParser.getAvailableRootedMetricsWithCmd());
 			model.addAttribute("unrootedMetrics", confParser.getAvailableUnrootedMetricsWithCmd());
 
 			return new ModelAndView("inputform", "newickStringNew", newick);
-		} else {			
+		} else {
 			addMetricsToArguments(newick);
 
 			// Input output files section
 
 			arguments.add((String.format("%s", INPUT_FILE)));
 			arguments.add((String.format("%s", inputFile.getAbsolutePath())));
-			
+
 			String outputFilePath = String.format("%s.out", inputFile.getAbsolutePath());
-			
+
 			arguments.add((String.format("%s", OUTPUT_FILE)));
 			arguments.add(outputFilePath);
-			
+
 			// end section
 
 			// Optional options section -N -P -I
@@ -168,33 +166,28 @@ public class NewickController {
 				arguments.add(String.format("%s", PRUNE_COMPARED));
 			}
 			Boolean includeSummary = false;
-			
+
 			if (newick.isIncludeSummary()) {
 				arguments.add(String.format("%s", INCLUDE_SUMMARY));
 				includeSummary = true;
 			}
-			
+
 			String[] argumentsToArray = new String[arguments.size()];
 			arguments.toArray(argumentsToArray);
-			String configPath = servletContext
-					.getRealPath("/WEB-INF/lib/config/");
-			System.out.println(configPath);
-			String dataPath = servletContext.getRealPath("/WEB-INF/lib/data");
 			TreeCmpExecutor executor;
 			try {
-				executor = new TreeCmpExecutor(configPath, dataPath,
-						argumentsToArray);
+				executor = new TreeCmpExecutor(argumentsToArray);
 				executor.Execute();
-				
+
 				inputFile.delete();
 			} catch (Exception e) {
 				//e.printStackTrace();
 			}
-			
+
 			Scanner outputFileScanner = new Scanner(new File(outputFilePath));
-			
+
 			if(outputFileScanner.hasNext()) {
-				reportStr = outputFileScanner.useDelimiter("\\Z").next();		
+				reportStr = outputFileScanner.useDelimiter("\\Z").next();
 				String myReport = htmlUtils.GenerateReportTable(reportStr, includeSummary);
 				model.addAttribute("report", myReport);
 			}
@@ -224,8 +217,8 @@ public class NewickController {
 
 		return new ModelAndView("trees", "JsonTrees", new JsonTrees());
 	}
-	
-	@RequestMapping(value="/trees", method=RequestMethod.POST)	
+
+	@RequestMapping(value="/trees", method=RequestMethod.POST)
 	public @ResponseBody JsonTrees provideTree(@RequestBody final JsonTrees tree) {
 		if(comparisionMode == Mode.MATRIX) {
 			tree.firstTreeNewick = splitter.GetTree(tree.firstTreeId-1);
@@ -235,25 +228,25 @@ public class NewickController {
 			tree.firstTreeNewick = splitter.GetTree(tree.secondTreeId-1);
 			tree.secondTreeNewick = referencedTreesSplitter.GetTree(tree.firstTreeId-1);
 		}
-		
+
 		return tree;
 	}
-	
+
 	private void addMetricsToArguments(Newick newick) {
 		arguments.add(String.format("%s", METRICS));
 
 		StringBuilder sb = new StringBuilder();
-		
+
 		for (String rootedMetric : newick.getRootedMetrics()) {
 			sb.append(String.format("%s ", rootedMetric));
 		}
 		for (String unrootedMetric : newick.getUnrootedMetrics()) {
 			sb.append(String.format("%s ", unrootedMetric));
 		}
-		
+
 		//Remove additional white space at the end
 		sb.deleteCharAt(sb.length() - 1);
-		
+
 		arguments.add(sb.toString());
 	}
 }

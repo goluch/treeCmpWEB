@@ -1,12 +1,9 @@
 package pl.gda.pg.eti.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Scanner;
+import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.*;
 
 import javax.servlet.ServletContext;
 import javax.validation.Valid;
@@ -14,17 +11,12 @@ import javax.validation.Valid;
 import org.springframework.boot.*;
 import org.springframework.boot.autoconfigure.*;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.stereotype.*;
-import org.springframework.web.bind.annotation.*;
 
-import org.apache.catalina.servlet4preview.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,6 +27,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 
+import org.thymeleaf.util.DateUtils;
 import pl.gda.pg.eti.model.JsonTrees;
 import pl.gda.pg.eti.model.Mode;
 import pl.gda.pg.eti.model.Newick;
@@ -60,7 +53,7 @@ public class NewickController {
 	ServletContext servletContext;
 
 	private List<String> arguments = new ArrayList<String>();
-	private ConfigParser confParser = new ConfigParser();
+	private static ConfigParser confParser = new ConfigParser();
 	private HtmlUtils htmlUtils = new HtmlUtils();
 
 	private NewickSplitter splitter;
@@ -68,22 +61,81 @@ public class NewickController {
 	private String reportStr;
 	private Mode comparisionMode;
 
+	private static String configFile = "";
+	private static String dataDir = "";
+
 	public static void main(String[] args) throws Exception {
 		SpringApplication.run(NewickController.class, args);
+		CopyDataAndConfigFilesToTemporary();
+	}
+
+	private static void CopyDataAndConfigFilesToTemporary() {
+
+		String actualDate = DateUtils.createNow(Locale.getDefault()).getTime().toString().replace(" ", "_").replace(":", "_");
+		Path tempDirPath = null;
+		try {
+			tempDirPath = Files.createTempDirectory("treeCmp_" + actualDate + "_" );
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		String configFileExternalForm =  NewickController.class.getClassLoader().getResource("static/config/config.xml").toExternalForm();
+		if (configFileExternalForm.startsWith("jar:")) {
+
+			//String tempDirString = System.getProperty("java.io.tmpdir");
+			configFile = tempDirPath + "/config.txt";
+
+			// copy config file to temp directory
+			try {
+				InputStream configFileStream = new ClassPathResource("static/config/config.xml").getInputStream();
+				//Files.delete(Paths.get(tempConfigString));
+				File tempConfigFile = new File(configFile);
+				OutputStream tempConfigFileStream = new FileOutputStream(tempConfigFile);
+				int read;
+				byte[] bytes = new byte[1024];
+				while ((read = configFileStream.read(bytes)) != -1) {
+					tempConfigFileStream.write(bytes, 0, read);
+				}
+				configFileStream.close();
+				tempConfigFile.deleteOnExit();
+			} catch (IOException ex) {
+				ex.printStackTrace();
+			}
+
+			dataDir = tempDirPath + "/data";
+
+			// copy data files to temp directory
+
+			new File(dataDir).mkdir();
+			for (String metricFile : confParser.getAvailableMetricsFiles()) {
+				try {
+					InputStream dataFileStream = new ClassPathResource("static/data/" + metricFile).getInputStream();
+					File file = new File(dataDir + "/" + metricFile);
+					OutputStream out = new FileOutputStream(file);
+					int read;
+					byte[] bytes = new byte[1024];
+					while ((read = dataFileStream.read(bytes)) != -1) {
+						out.write(bytes, 0, read);
+					}
+					dataFileStream.close();
+					file.deleteOnExit();
+				} catch (IOException ex) {
+				}
+			}
+		}
 	}
 
 	@RequestMapping(value = "/WEB", method = RequestMethod.GET)
 	public ModelAndView getNewick(Model model) {
 
-		InputStream configFileStream = null;
 		try {
-			configFileStream = new ClassPathResource("static/config/config.xml").getInputStream();
-		} catch (IOException e) {
-			e.printStackTrace();
+			InputStream configFileStream = new ClassPathResource("static/config/config.xml").getInputStream();
+			confParser.setMetricConfigFileStream(configFileStream);
+			confParser.clearAndSetAvailableMetrics();
+			configFileStream.close();
+		} catch (IOException ex) {
+			ex.printStackTrace();
 		}
-		confParser.setMetricConfigFileStream(configFileStream);
-
-		confParser.clearAndSetAvailableMetrics();
 
 		model.addAttribute("rootedMetrics", confParser.getAvailableRootedMetricsWithCmd());
 		model.addAttribute("unrootedMetrics", confParser.getAvailableUnrootedMetricsWithCmd());
@@ -176,7 +228,15 @@ public class NewickController {
 			arguments.toArray(argumentsToArray);
 			TreeCmpExecutor executor;
 			try {
-				executor = new TreeCmpExecutor(argumentsToArray);
+
+				if (configFile == "") {
+					configFile = this.getClass().getClassLoader().getResource("static/config/config.xml").getPath();
+				}
+				if (dataDir == "") {
+					dataDir = this.getClass().getClassLoader().getResource("static/data").getPath();
+				}
+
+				executor = new TreeCmpExecutor(argumentsToArray, configFile, dataDir);
 				executor.Execute();
 
 				inputFile.delete();

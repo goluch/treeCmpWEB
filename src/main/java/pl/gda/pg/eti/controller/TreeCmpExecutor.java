@@ -1,9 +1,7 @@
 package pl.gda.pg.eti.controller;
 
-import java.io.FileNotFoundException;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.URLDecoder;
-
 import treecmp.command.Command;
 import treecmp.commandline.CommandLineParser;
 import treecmp.common.TimeDate;
@@ -18,9 +16,13 @@ import treecmp.metric.Metric;
 public class TreeCmpExecutor {
 
 	private String[] args;
+	private String configFile;
+	private String dataDir;
 
-	public TreeCmpExecutor(String[] args) {
+	public TreeCmpExecutor(String[] args, String configFile, String dataDir) {
 		this.args = args;
+		this.configFile = configFile;
+		this.dataDir = dataDir;
 	}
 
 	public void Execute() {
@@ -33,22 +35,14 @@ public class TreeCmpExecutor {
 							+ "Please move TreeCmp application to a location that does not contain plus (+) character.");
 			return;
 		}
-		String runtimePath = runtimePathTemp;
-		try {
-			runtimePath = URLDecoder.decode( runtimePathTemp, "UTF-8");
-		} catch (UnsupportedEncodingException ex) {
-		}
 
-        try {
-            ConfigSettings.initConfig(
-            		this.getClass().getClassLoader().getResource("static/config/config.xml").getPath(),
-					this.getClass().getClassLoader().getResource("static/data").getPath()
-			);
-        } catch (FileNotFoundException ex) {
-            //can not find the configuration file
-            System.out.println(ex.getMessage());
-            return;
-        }
+		try {
+			ConfigSettings.initConfig(configFile, dataDir);
+		} catch (FileNotFoundException ex) {
+			//can not find the configuration file
+			System.out.println(ex.getMessage());
+			return;
+		}
 		
 		Command cmd = null;
 		try {

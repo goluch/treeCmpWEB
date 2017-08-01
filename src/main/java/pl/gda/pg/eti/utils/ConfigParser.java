@@ -19,7 +19,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringReader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /////////////////////////////////////////////
@@ -33,10 +35,12 @@ public class ConfigParser {
 		
 		availableRootedMetricsWithCmd = new HashMap<String, String>();
 		availableUnrootedMetricsWithCmd = new HashMap<String, String>();
+		availableMetricsFiles = new ArrayList<String>();
 	}
 
 	private Map<String, String> availableRootedMetricsWithCmd;
 	private Map<String, String> availableUnrootedMetricsWithCmd;
+	private List<String> availableMetricsFiles;
 
 	public Map<String, String> getAvailableRootedMetricsWithCmd() {
 		return availableRootedMetricsWithCmd;
@@ -44,11 +48,13 @@ public class ConfigParser {
 	public Map<String, String> getAvailableUnrootedMetricsWithCmd() {
 		return availableUnrootedMetricsWithCmd;
 	}
+	public List<String> getAvailableMetricsFiles() { return availableMetricsFiles; }
 
 	public void clearAndSetAvailableMetrics() {
 
 		availableRootedMetricsWithCmd.clear();
 		availableUnrootedMetricsWithCmd.clear();
+		availableMetricsFiles.clear();;
 
 		try {
 			if (metricConfigFileStream == null) {
@@ -78,7 +84,8 @@ public class ConfigParser {
 						availableUnrootedMetricsWithCmd.put(eElement.getElementsByTagName("command_name")
 								.item(0).getTextContent(), String.format(" %s", eElement.getElementsByTagName("fullname").item(0).getTextContent()));
 					}
-
+					availableMetricsFiles.add(eElement.getElementsByTagName("unif_data").item(0).getTextContent());
+					availableMetricsFiles.add(eElement.getElementsByTagName("yule_data").item(0).getTextContent());
 				}
 			}
 
